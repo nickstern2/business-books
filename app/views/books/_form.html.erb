@@ -1,0 +1,20 @@
+
+<!-- collection: Company.active.order(:name), prompt: "Choose a Company" -->
+<% category_array = [] %>
+<%Category.all.each do |cat| %>
+  <% category_array << [cat.category_name, cat.id] %>
+<% end %>
+
+
+<%= simple_form_for [@category, @book] do |f| %>
+  <%= f.input :title %>
+  <%= f.association :category, collection: category_array %>
+  <%#= raise %>
+  <%= f.simple_fields_for :authors do |pf| %>
+    <%= pf.input :first_name %>
+    <%= pf.input :last_name %>
+      <%= f.button :submit, class:"btn btn-primary" %>
+      end
+  <% end %>
+<% end %>
+

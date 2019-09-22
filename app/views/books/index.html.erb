@@ -2,6 +2,14 @@
 
 <% @books.each do |book| %>
   <div class="container">
-    <%= book.title %>
+    <div class="card">
+      <p>Title: <%= book.title %> </p>
+      <p>Author: <%= book.author.first_name + " " + book.author.last_name %></p>
+      <p>Category: <%= book.category.category_name %></p>
+      <p>Read time: <%= book.length %> mins</p>
+      <%= link_to "Delete this product", book, method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
   </div>
 <% end %>
+
+<%= link_to "Add a book", new_book_path %>
