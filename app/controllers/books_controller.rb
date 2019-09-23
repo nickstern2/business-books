@@ -10,38 +10,49 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @author = Author.new
+    # @category = Category.new
   end
 
   def create
     @book = Book.new(book_params)
 
-    # @category = Category.find[:category_name].where(params[:category_id])
-
     author_first_name = params[:book][:authors][:first_name]
     author_last_name = params[:book][:authors][:last_name]
     @author = Author.new(first_name: author_first_name, last_name: author_last_name)
     @author.save
-    # @book.category_id = @category.id
+
     @category = Category.find(params[:book][:category_id])
     @book.category = @category
 
-    # Person.where(name: 'Spartacus', rating: 4).ids
-#
-
     @book.author_id = @author.id
     if @book.save
-        # raise
       redirect_to books_path
     else
-      # raise
       render "new"
     end
   end
 
   def edit
+    @book = Book.find(params[:id])
+    @author = @book.author
+    # @category = @book.category
   end
 
   def update
+    @book = Book.find(params[:id])
+
+    author_first_name = params[:book][:authors][:first_name]
+    author_last_name = params[:book][:authors][:last_name]
+    @author = Author.update(first_name: author_first_name, last_name: author_last_name)
+
+    @category = Category.find(params[:book][:category_id])
+    @book.category = @category
+    if @book.update(book_params)
+      redirect_to book_path(@book.id)
+    else
+      render "new"
+      raise
+    end
   end
 
   def destroy
