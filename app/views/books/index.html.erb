@@ -3,14 +3,29 @@
 <% @books.each do |book| %>
   <div class="container">
     <div class="card">
-      <p>Title: <%= book.title %> </p>
-      <p>Author: <%= book.author.first_name + " " + book.author.last_name %></p>
-      <p>Category: <%= book.category.category_name %></p>
-      <p>Read time: <%= book.length %> mins</p>
-      <%= link_to "More info", book_path(book.id) %>
-      <%= link_to "Add a review", new_book_review_path(book.id) %>
-      <%= link_to "Edit", edit_book_path(book.id) %>
-      <%= link_to "[x]", book, method: :delete, data: { confirm: "Are you sure?" } %>
+      <div class="book-holder">
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <p>Title: <%= book.title %> </p>
+          <p>Author: <%= book.author.first_name + " " + book.author.last_name %></p>
+          <p>Category: <%= book.category.category_name %></p>
+          <p>Read time: <%= book.length %> mins</p>
+        <%= link_to "More info", book_path(book.id) %>
+        <%= link_to "Add a review", new_book_review_path(book.id) %>
+        <%= link_to "Edit", edit_book_path(book.id) %>
+        <%= link_to "[x]", book, method: :delete, data: { confirm: "Are you sure?" } %>
+        </div>
+        <div class="col-12 col-lg-6">
+          <p>Reviews:</p>
+          <% book.reviews.each do |review| %>
+          <div class="row">
+            <%= review.rating %>
+            <%= review.description %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 <% end %>
