@@ -1,10 +1,20 @@
 <div class="container">
   <div class="card">
       <p>Title: <%= @book.title %></p>
+      <p>ID: <%= @book.id %></p>
       <p>Author: <%= @book.author.first_name + " " + @book.author.last_name%></p>
       <p>Category: <%= @book.category.category_name %></p>
+        <p>Reviews:</p>
+        <% @book.reviews.each do |review| %>
+      <div class="">
+          <%= review.rating %>
+          <%= review.description %>
+        <% end %>
+      </div>
   </div>
-<%= link_to "back", books_path %>
+    <%= link_to "Add a review", new_book_review_path(@book.id)%>
+    <br>
+    <%= link_to "back", books_path %>
 </div>
 
 
