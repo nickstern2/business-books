@@ -34,24 +34,29 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    # @author = Author.where("first_name LIKE ?", "params[:book][:authors][:first_name]")
+    # @author = Author.find(params[:id])
     @author = @book.author
     # @category = @book.category
   end
 
   def update
     @book = Book.find(params[:id])
-
+    # @author = @book.author.id
+    # last_name = @book.author.last_name
     author_first_name = params[:book][:authors][:first_name]
     author_last_name = params[:book][:authors][:last_name]
-    @author = Author.update(first_name: author_first_name, last_name: author_last_name)
+    @author = Author.new(first_name: author_first_name, last_name: author_last_name)
 
+    @book.author = @author
     @category = Category.find(params[:book][:category_id])
     @book.category = @category
     if @book.update(book_params)
       redirect_to book_path(@book.id)
+      # raise
     else
       render "new"
-      raise
+      # raise
     end
   end
 
