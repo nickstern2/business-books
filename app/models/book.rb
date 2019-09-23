@@ -4,4 +4,5 @@ class Book < ApplicationRecord
   has_many :reviews
 
   validates :title, presence: true
+  # validates :first_name through
 end
