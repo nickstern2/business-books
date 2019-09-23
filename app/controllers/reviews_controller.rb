@@ -36,9 +36,6 @@ class ReviewsController < ApplicationController
   def destroy
   end
 
-  # def numbered_review
-  # end
-
   private
 
   def review_params

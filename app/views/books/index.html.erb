@@ -6,10 +6,10 @@
       <div class="book-holder">
       <div class="row">
         <div class="col-12 col-lg-6">
-          <p>Title: <%= book.title %> </p>
-          <p>Author: <%= book.author.first_name + " " + book.author.last_name %></p>
-          <p>Category: <%= book.category.category_name %></p>
-          <p>Read time: <%= book.length %> mins</p>
+          <p><strong>Title: </strong><%= book.title %> </p>
+          <p><strong>Author: </strong><%= book.author.first_name + " " + book.author.last_name %></p>
+          <p><strong>Category: </strong><%= book.category.category_name %></p>
+          <p><strong>Read time: </strong><%= book.length %> mins</p>
         <%= link_to "More info", book_path(book.id) %>
         <br>
         <%= link_to "Add a review", new_book_review_path(book.id) %>
@@ -19,13 +19,28 @@
         <%= link_to "[x]", book, method: :delete, data: { confirm: "Are you sure?" } %>
         </div>
         <div class="col-12 col-lg-6">
-          <p>Reviews:</p>
+         <strong><p>Reviews:</p></strong>
           <% book.reviews.each do |review| %>
           <div class="row">
-            <%= review.rating %>
+            <% review.rating.to_i.times do  %>
+              <i class="fas fa-star"></i>
+            <% end %>
+
             <%= review.description %>
           </div>
           <% end %>
+          <br>
+
+          <strong><p>Average Rating:</p></strong>
+          <% if (book.avergae_rating.is_a? Numeric) && (book.avergae_rating > 0) %>
+            <% book.avergae_rating.to_i.times do %>
+              <i class="fas fa-star"></i>
+             <% end %>
+          <% else %>
+            <%= puts "No reviews yet" %>
+          <% end %>
+          <%# raise %>
+             <%# end %>
         </div>
       </div>
     </div>
