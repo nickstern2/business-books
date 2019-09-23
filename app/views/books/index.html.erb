@@ -8,8 +8,9 @@
       <p>Category: <%= book.category.category_name %></p>
       <p>Read time: <%= book.length %> mins</p>
       <%= link_to "More info", book_path(book.id) %>
+      <%= link_to "Add a review", new_book_review_path(book.id) %>
       <%= link_to "Edit", edit_book_path(book.id) %>
-      <%= link_to "Delete this product", book, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%= link_to "[x]", book, method: :delete, data: { confirm: "Are you sure?" } %>
     </div>
   </div>
 <% end %>
