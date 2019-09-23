@@ -19,7 +19,7 @@ class BooksController < ApplicationController
     author_first_name = params[:book][:authors][:first_name]
     author_last_name = params[:book][:authors][:last_name]
     @author = Author.new(first_name: author_first_name, last_name: author_last_name)
-    @author.save
+    # if @author.uniq
 
     @category = Category.find(params[:book][:category_id])
     @book.category = @category

@@ -1,8 +1,34 @@
 <h2>All Authors</h2>
 
-<% @authors.each do |author| %>
-<div class="card">
-  <%= author.first_name + " " + author.last_name %>
+<%  author_array = [] %>
+
+<% unique_author_array = [] %>
+
+
+  <% @authors.each do |author| %>
+    <% author_array << author.first_name.strip + " " + author.last_name.strip %>
+  <% end %>
+
+  <% unique_author_array = author_array.uniq %>
+
+<div class="card d-flex justify-content-between">
+
+  <% unique_author_array.each do |unique_author| %>
+    <% @authors.each do |author| %>
+        <% if (unique_author == (author.first_name + " " + author.last_name)) && author.books.count > 0 %>
+        <strong><%= author.first_name + " " + author.last_name %></strong>
+            <p> Books: </p>
+          <% author.books.each do |book| %>
+            <div>
+              <%= link_to book_path(book.id) do %>
+              <p>-<%= book.title %></p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+    <% end %>
+  <% end %>
 
 </div>
-<% end %>
+
+<%= link_to "All Books", books_path %>
