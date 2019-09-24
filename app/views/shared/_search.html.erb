@@ -1,0 +1,9 @@
+<%= form_tag books_path, method: :get do %>
+  <%= text_field_tag :query,
+    params[:query],
+    class: "form-control",
+    placeholder: "Find a Title"
+  %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+  <%= link_to "All books", books_path, class: "btn btn-primary" %>
+<% end %>

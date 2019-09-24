@@ -1,13 +1,15 @@
 <h2>All Books</h2>
+<%= render 'shared/search' %>
 
 <% @books.each do |book| %>
+<%#= raise %>
   <div class="container">
     <div class="card">
       <div class="book-holder">
       <div class="row">
         <div class="col-12 col-lg-6">
           <p><strong>Title: </strong><%= book.title %> </p>
-          <p><strong>Author: </strong><%= book.author.first_name + " " + book.author.last_name %></p>
+          <p><strong>Author: </strong><%= book.author.author_full_name %></p>
           <p><strong>Category: </strong><%= book.category.category_name %></p>
           <p><strong>Read time: </strong><%= book.length %> mins</p>
         <%= link_to "More info", book_path(book.id) %>
