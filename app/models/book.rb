@@ -1,23 +1,24 @@
 class Book < ApplicationRecord
-  belongs_to :category
   belongs_to :author
+  belongs_to :category
   has_many :reviews, dependent: :destroy
 
   validates :title, presence: true
   # validates :first_name through
-
   def avergae_rating
-   sum = 0
-   count = 0
+    sum = 0
+    count = 0
 
-
-   self.reviews.each do |review|
-    sum += review.rating
-    count += 1
+    self.reviews.each do |review|
+      sum += review.rating
+      count += 1
     end
     average = sum / count.to_f
     return average
   end
 
-
+  # def author_full_name
+  #   full_name = self.author.first_name + " " + self.author.last_name
+  #   return full_name
+  # end
 end

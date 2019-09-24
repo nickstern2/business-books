@@ -1,6 +1,16 @@
 class BooksController < ApplicationController
   def index
-    @books = Book.all.order(:id)
+    # full_name = self.author_full_name
+    if params[:query].present?
+      sql_query = " \
+        books.title @@ :query \
+        OR authors.first_name @@ :query \
+        OR authors.last_name @@ :query \
+      "
+      @books = Book.joins(:author).where(sql_query, query: "%#{params[:query]}%")
+    else
+      @books = Book.all.order(:id)
+    end
   end
 
   def show
