@@ -1,10 +1,31 @@
 class Book < ApplicationRecord
-  belongs_to :author
+ belongs_to :author
+  include PgSearch::Model
+  multisearchable against: [ :title ]
+
+  pg_search_scope :search_by_title, against: [:title]
+  pg_search_scope :search_by_title,
+    against: [ :title ],
+    using: {
+      tsearch: { prefix: true } # <-- now `superman batm` will return something!
+    }
+    pg_search_scope :global_search,
+      against: [ :title ],
+      associated_against: {
+        author: [ :first_name, :last_name ]
+      },
+    using: {
+      tsearch: { prefix: true }
+    }
+
+
+  # belongs_to :author
   belongs_to :category
   has_many :reviews, dependent: :destroy
 
   validates :title, presence: true
-  # validates :first_name through
+
+
   def avergae_rating
     sum = 0
     count = 0

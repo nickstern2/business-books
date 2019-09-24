@@ -1,13 +1,14 @@
 class BooksController < ApplicationController
   def index
-    # full_name = self.author_full_name
     if params[:query].present?
-      sql_query = " \
-        books.title @@ :query \
-        OR authors.first_name @@ :query \
-        OR authors.last_name @@ :query \
-      "
-      @books = Book.joins(:author).where(sql_query, query: "%#{params[:query]}%")
+      @books = Book.global_search(params[:query])
+      # @authors = Author.global_search(params[:query])
+      # sql_query = " \
+      #   books.title @@ :query \
+      #   OR authors.first_name @@ :query \
+      #   OR authors.last_name @@ :query \
+      # "
+      # @books = Book.joins(:author).where(sql_query, query: "%#{params[:query]}%")
     else
       @books = Book.all.order(:id)
     end
